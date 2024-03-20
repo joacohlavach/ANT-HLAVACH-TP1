@@ -1,0 +1,43 @@
+version: '3.8'
+
+services:
+  app:
+    build: .
+    ports:
+      - 8000:8000
+    container_name: app
+    volumes:
+      - .:/app
+    depends_on:
+      - mysql
+    networks:
+      - itsv
+
+  mysql:
+    image: mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: itsv
+      MYSQL_DATABASE: itsv
+      MYSQL_USER: itsv
+      MYSQL_PASSWORD: itsv
+    container_name: mysql
+    volumes:
+      - ./data/mysql:/var/lib/mysql
+
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: phpmyadmin
+    depends_on:
+      - mysql
+    ports:
+      - 8080:8080
+    environment:
+      PMA_HOST: mysql
+      PMA_PORT: 3306
+      PMA_USER: root
+      PMA_PASSWORD: password
+
+networks:
+  itsv:
+    driver: bridge
