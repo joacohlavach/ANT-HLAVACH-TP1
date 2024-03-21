@@ -23,6 +23,8 @@ services:
     container_name: mysql
     volumes:
       - ./data/mysql:/var/lib/mysql
+    networks:
+      - itsv
 
 
   phpmyadmin:
@@ -37,6 +39,8 @@ services:
       PMA_PORT: 3306
       PMA_USER: root
       PMA_PASSWORD: password
+    networks:
+      - itsv
 
 networks:
   itsv:
